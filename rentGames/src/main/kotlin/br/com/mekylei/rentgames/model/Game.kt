@@ -1,4 +1,4 @@
-package rentgames.model
+package br.com.mekylei.rentgames.model
 
 data class Game(val id: Int, val title: String, val thumb: String) {
 

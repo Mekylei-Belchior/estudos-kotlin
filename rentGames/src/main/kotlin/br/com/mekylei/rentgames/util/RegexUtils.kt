@@ -1,4 +1,4 @@
-package rentgames.util
+package br.com.mekylei.rentgames.util
 
 object RegexUtils {
     const val EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$"

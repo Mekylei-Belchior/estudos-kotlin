@@ -1,7 +1,7 @@
-package rentgames.model
+package br.com.mekylei.rentgames.model
 
-import rentgames.util.RegexUtils
-import rentgames.util.toAge
+import br.com.mekylei.rentgames.util.RegexUtils
+import br.com.mekylei.rentgames.util.toAge
 import java.util.*
 import kotlin.random.Random
 

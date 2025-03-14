@@ -1,4 +1,4 @@
-package rentgames.util
+package br.com.mekylei.rentgames.util
 
 import java.time.LocalDate
 import java.time.Period

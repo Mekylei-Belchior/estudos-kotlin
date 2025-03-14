@@ -1,7 +1,7 @@
-package rentgames.service
+package br.com.mekylei.rentgames.service
 
 import com.google.gson.Gson
-import rentgames.model.InfoGame
+import br.com.mekylei.rentgames.model.InfoGame
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest

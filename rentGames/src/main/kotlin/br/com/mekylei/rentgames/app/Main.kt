@@ -1,8 +1,8 @@
-package rentgames.app
+package br.com.mekylei.rentgames.app
 
-import rentgames.model.Game
-import rentgames.model.Gamer
-import rentgames.service.SearchApi
+import br.com.mekylei.rentgames.model.Game
+import br.com.mekylei.rentgames.model.Gamer
+import br.com.mekylei.rentgames.service.SearchApi
 import java.util.*
 
 fun main() {
@@ -10,8 +10,8 @@ fun main() {
     val scan = Scanner(System.`in`)
     var answer: String?
 
-    val gamer = Gamer.createGamer(scan)
-    //val gamer = Gamer("Mekylei Belchior", "mekylei@msn.com", "b3lch1or", "05/10/1985")
+    //val gamer = Gamer.createGamer(scan)
+    val gamer = Gamer("Mekylei Belchior", "mekylei@email.com", "b3lch1or", "25/01/1986")
     var game: Game? = null
 
     do {
