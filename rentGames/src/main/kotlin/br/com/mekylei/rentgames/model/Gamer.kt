@@ -24,7 +24,7 @@ data class Gamer(var name: String, var email: String) {
     constructor(name: String, email: String, userName: String, birthdate: String) : this(name, email) {
         this.userName = userName
         this.birthdate = birthdate
-        this.printAge()
+        //this.printAge()
         this.createIdentifier()
     }
 
@@ -95,10 +95,14 @@ data class Gamer(var name: String, var email: String) {
             val regex = Regex(RegexUtils.DATA)
             if (regex.matches(this.birthdate!!)) {
                 println()
-                println("Idade do jogador: " + this.birthdate!!.toAge().toString())
+                println("Idade do jogador [${this.userName}]: " + this.birthdate!!.toAge().toString())
                 println()
             }
         }
+    }
+
+    fun rental(game: Game, period: RentalPeriod): Rental {
+        return Rental(this, game, period)
     }
 
 }

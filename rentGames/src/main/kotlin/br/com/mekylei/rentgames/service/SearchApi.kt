@@ -1,30 +1,45 @@
 package br.com.mekylei.rentgames.service
 
-import com.google.gson.Gson
-import br.com.mekylei.rentgames.model.InfoGame
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
+import br.com.mekylei.rentgames.helper.AppHttpClient
+import br.com.mekylei.rentgames.helper.ClientHttpException
+import br.com.mekylei.rentgames.model.*
+import br.com.mekylei.rentgames.util.createGame
+import br.com.mekylei.rentgames.util.createGamer
 
 class SearchApi {
 
     fun findBy(id: String): InfoGame {
-        val client: HttpClient = HttpClient.newHttpClient()
-        val request = HttpRequest.newBuilder()
-            .uri(URI.create("https://www.cheapshark.com/api/1.0/games?id=$id"))
-            .build()
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
-        val json = response.body()
-
-        val gson = Gson()
         try {
-            return gson.fromJson(json, InfoGame::class.java)
-        } catch (e: Exception) {
-            throw ApiException("Jogo não encontrado.")
+            val appHttpClient = AppHttpClient()
+            return appHttpClient.request("https://www.cheapshark.com/api/1.0/games?id=$id", InfoGame::class.java)
+        } catch (e: ClientHttpException) {
+            throw ApiException("Jogo não encontrado. ${e.message}", e)
+        }
+    }
+
+    fun findGamers(url: String): List<Gamer> {
+        try {
+            val appHttpClient = AppHttpClient()
+            val gamers: List<InfoGamerJson> = appHttpClient.request(url)
+            return gamers.map { gamerJson -> gamerJson.createGamer() }
+        } catch (e: ClientHttpException) {
+            throw ApiException("Jogadores não encontrados. ${e.message}", e)
+        }
+    }
+
+    fun findGames(url: String): List<Game> {
+        try {
+            val appHttpClient = AppHttpClient()
+            val games: List<InfoGameJson> = appHttpClient.request(url)
+            return games.map { gameJson -> gameJson.createGame() }
+        } catch (e: ClientHttpException) {
+            throw ApiException("Jogos não encontrados. ${e.message}", e)
         }
     }
 
 }
 
-class ApiException(msg: String) : RuntimeException(msg)
+class ApiException(
+    message: String,
+    cause: Throwable? = null
+) : RuntimeException(message, cause)

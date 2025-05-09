@@ -19,7 +19,8 @@ fun main() {
             println("Digite um código de jogo para buscar:")
             val idGame = scan.nextLine()
             val myInfoGame = SearchApi().findBy(idGame)
-            game = Game(Integer.parseInt(idGame), myInfoGame.info.title, myInfoGame.info.thumb)
+            game = Game(myInfoGame.info.title, myInfoGame.info.thumb)
+            game.id = Integer.parseInt(idGame)
         }
 
         result.onFailure { e -> println(e.message + " Tente outro código!") }
@@ -30,7 +31,7 @@ fun main() {
                 println("Insira a descrição personalizada:")
                 game?.description = scan.nextLine()
             } else {
-                game?.description = game?.title
+                game?.description = game.title
             }
 
             gamer.games.add(game)
@@ -42,7 +43,7 @@ fun main() {
 
     } while ("S".equals(answer, true))
 
-    if (gamer.games.size > 0) {
+    if (gamer.games.isNotEmpty()) {
         gamer.printSorted("title")
 
         while (true) {
