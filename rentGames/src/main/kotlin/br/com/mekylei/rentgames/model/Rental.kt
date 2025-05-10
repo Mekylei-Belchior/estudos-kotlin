@@ -5,7 +5,7 @@ data class Rental(
     val game: Game,
     val rentalPeriod: RentalPeriod
 ) {
-    val cost = game.price * rentalPeriod.rentDays
+    val cost = gamer.plan.getPrice(this)
 
     override fun toString(): String {
         return "\n${gamer.name} alugou o jogo:" +

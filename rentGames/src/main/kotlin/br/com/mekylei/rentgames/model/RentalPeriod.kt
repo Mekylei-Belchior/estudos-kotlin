@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.Period
 
 data class RentalPeriod(
-    val start: LocalDate,
-    val end: LocalDate) {
-    val rentDays = Period.between(start, end).days
+    val startDate: LocalDate,
+    val endDate: LocalDate) {
+    val rentDays = Period.between(startDate, endDate).days
 }

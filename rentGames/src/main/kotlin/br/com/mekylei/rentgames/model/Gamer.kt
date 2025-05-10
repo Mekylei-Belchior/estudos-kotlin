@@ -18,8 +18,11 @@ data class Gamer(var name: String, var email: String) {
 
     private var birthdate: String? = null
 
-    var games = mutableListOf<Game?>()
+    val games = mutableListOf<Game?>()
 
+    val rentalGames = mutableListOf<Rental>()
+
+    val plan: Plan = BasicPlan("BASIC")
 
     constructor(name: String, email: String, userName: String, birthdate: String) : this(name, email) {
         this.userName = userName
@@ -101,8 +104,15 @@ data class Gamer(var name: String, var email: String) {
         }
     }
 
-    fun rental(game: Game, period: RentalPeriod): Rental {
-        return Rental(this, game, period)
+    fun rent(game: Game, period: RentalPeriod) {
+        val rentalGame = Rental(this, game, period)
+        rentalGames.add(rentalGame)
+    }
+
+    fun getMonthlyRentedGames(month: Int): List<Game> {
+        return rentalGames
+            .filter { rental -> rental.rentalPeriod.startDate.monthValue == month }
+            .map { rental -> rental.game }
     }
 
 }
