@@ -1,22 +1,24 @@
 package br.com.mekylei.rentgames.model
 
 import br.com.mekylei.rentgames.interfaces.Recommendable
+import br.com.mekylei.rentgames.util.round
 import com.google.gson.annotations.Expose
+import java.math.BigDecimal
 
-data class Game(@Expose val title: String, @Expose val thumb: String): Recommendable {
+data class Game(@Expose val title: String, @Expose val thumb: String) : Recommendable {
 
     var id: Int? = null
     var description: String? = null
-    var price: Double = 0.0
+    var price: BigDecimal = BigDecimal.ZERO
     private val reviews = mutableListOf<Int>()
     override val score: Double
-        get() = reviews.average()
+        get() = reviews.average().round()
 
     override fun recommend(rating: Int) {
         reviews.add(rating)
     }
 
-    constructor(title: String, thumb: String, description: String, price: Double): this(title, thumb) {
+    constructor(title: String, thumb: String, description: String, price: BigDecimal) : this(title, thumb) {
         this.description = description
         this.price = price
     }
@@ -26,7 +28,8 @@ data class Game(@Expose val title: String, @Expose val thumb: String): Recommend
                 "\n- Título   : $title" +
                 "\n- Capa     : $thumb" +
                 "\n- Descrição: $description" +
-                "\n- Preço    : $price"
+                "\n- Preço    : $price" +
+                "\n- Avaliação: $score"
     }
 
 }

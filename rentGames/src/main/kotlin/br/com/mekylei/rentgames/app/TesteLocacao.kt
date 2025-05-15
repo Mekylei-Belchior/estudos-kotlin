@@ -17,6 +17,7 @@ fun main() {
     //games.forEach { it -> println(it) }
 
     val monica = gamers[0]
+    val bruno = gamers[4]
 
     val theWitcher = games[0]
     val theLastOfUs = games[2]
@@ -33,11 +34,26 @@ fun main() {
     monica.rent(redDeadRedemption, period3)
     monica.rent(godOfWar, period4)
 
-    monica.rentalGames.forEach { it -> println(it) }
+    bruno.rent(theWitcher, period1)
+    bruno.rent(theLastOfUs, period2)
+    bruno.rent(redDeadRedemption, period3)
+
+    //monica.rentalGames.forEach { it -> println(it) }
+    //bruno.rentalGames.forEach { it -> println(it) }
 
     monica.recommendGame(theWitcher, 8)
+    monica.recommendGame(theLastOfUs, 10)
     monica.recommendGame(redDeadRedemption, 10)
     monica.recommendGame(godOfWar, 8)
+
+    bruno.recommendGame(theWitcher, 5)
+    bruno.recommendGame(theLastOfUs, 10)
+    bruno.recommendGame(redDeadRedemption, 9)
+
+    //monica.recommendedGames.forEach { it -> println(it) }
+    //bruno.recommendedGames.forEach { it -> println(it) }
+
+    println(theLastOfUs)
 
     val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
     val json = gson.toJson(monica.recommendedGames)
@@ -45,6 +61,6 @@ fun main() {
     val file = File("recommended-${monica.name}.json")
     file.writeText(json)
 
-    println(file.absolutePath)
+    //println(file.absolutePath)
 
 }

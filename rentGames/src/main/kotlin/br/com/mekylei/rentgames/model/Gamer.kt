@@ -1,14 +1,13 @@
 package br.com.mekylei.rentgames.model
 
+import br.com.mekylei.rentgames.interfaces.Recommendable
 import br.com.mekylei.rentgames.util.RegexUtils
+import br.com.mekylei.rentgames.util.round
 import br.com.mekylei.rentgames.util.toAge
-import com.google.gson.GsonBuilder
-import java.io.File
-import java.io.FileReader
 import java.util.*
 import kotlin.random.Random
 
-data class Gamer(var name: String, var email: String) {
+data class Gamer(var name: String, var email: String) : Recommendable {
     private var userId: String? = null
 
     private var userName: String? = null
@@ -28,6 +27,19 @@ data class Gamer(var name: String, var email: String) {
     val plan: Plan = BasicPlan("BASIC")
 
     val recommendedGames = mutableListOf<Game>()
+
+    private val reviews = mutableListOf<Int>()
+
+    override val score: Double
+        get() = reviews.average().round()
+
+    override fun recommend(rating: Int) {
+        if (rating < 1 || rating > 10) {
+            throw IllegalArgumentException("Avaliação inválida. Insira uma nota de avaliação entre 1 e 10")
+        } else {
+            reviews.add(rating)
+        }
+    }
 
     constructor(name: String, email: String, userName: String, birthdate: String) : this(name, email) {
         this.userName = userName
@@ -83,7 +95,7 @@ data class Gamer(var name: String, var email: String) {
     }
 
     override fun toString(): String {
-        return "Gamer(name='$name', email='$email', userId=$userId, userName=$userName, brithDate=$birthdate)"
+        return "Gamer(name='$name', email='$email', userId=$userId, userName=$userName, brithDate=$birthdate, score=$score)"
     }
 
     fun printSorted(byField: String = "id") {
