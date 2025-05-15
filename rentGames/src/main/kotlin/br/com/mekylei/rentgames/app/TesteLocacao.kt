@@ -5,6 +5,8 @@ import br.com.mekylei.rentgames.model.Game
 import br.com.mekylei.rentgames.model.Gamer
 import br.com.mekylei.rentgames.model.RentalPeriod
 import br.com.mekylei.rentgames.service.SearchApi
+import com.google.gson.GsonBuilder
+import java.io.File
 import java.time.LocalDate
 
 fun main() {
@@ -32,5 +34,17 @@ fun main() {
     monica.rent(godOfWar, period4)
 
     monica.rentalGames.forEach { it -> println(it) }
+
+    monica.recommendGame(theWitcher, 8)
+    monica.recommendGame(redDeadRedemption, 10)
+    monica.recommendGame(godOfWar, 8)
+
+    val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+    val json = gson.toJson(monica.recommendedGames)
+
+    val file = File("recommended-${monica.name}.json")
+    file.writeText(json)
+
+    println(file.absolutePath)
 
 }

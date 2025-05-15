@@ -2,6 +2,9 @@ package br.com.mekylei.rentgames.model
 
 import br.com.mekylei.rentgames.util.RegexUtils
 import br.com.mekylei.rentgames.util.toAge
+import com.google.gson.GsonBuilder
+import java.io.File
+import java.io.FileReader
 import java.util.*
 import kotlin.random.Random
 
@@ -23,6 +26,8 @@ data class Gamer(var name: String, var email: String) {
     val rentalGames = mutableListOf<Rental>()
 
     val plan: Plan = BasicPlan("BASIC")
+
+    val recommendedGames = mutableListOf<Game>()
 
     constructor(name: String, email: String, userName: String, birthdate: String) : this(name, email) {
         this.userName = userName
@@ -113,6 +118,11 @@ data class Gamer(var name: String, var email: String) {
         return rentalGames
             .filter { rental -> rental.rentalPeriod.startDate.monthValue == month }
             .map { rental -> rental.game }
+    }
+
+    fun recommendGame(game: Game, rating: Int) {
+        game.recommend(rating)
+        recommendedGames.add(game)
     }
 
 }
