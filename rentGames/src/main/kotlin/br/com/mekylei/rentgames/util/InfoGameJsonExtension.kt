@@ -5,6 +5,7 @@ import br.com.mekylei.rentgames.model.InfoGameJson
 
 fun InfoGameJson.createGame(): Game {
     return Game(
+        this.id,
         this.titulo,
         this.capa,
         this.descricao,

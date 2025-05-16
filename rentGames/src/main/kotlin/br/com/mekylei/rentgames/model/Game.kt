@@ -18,9 +18,10 @@ data class Game(@Expose val title: String, @Expose val thumb: String) : Recommen
         reviews.add(rating)
     }
 
-    constructor(title: String, thumb: String, description: String, price: BigDecimal) : this(title, thumb) {
+    constructor(id: Int?, title: String, thumb: String, description: String, price: BigDecimal) : this(title, thumb) {
         this.description = description
         this.price = price
+        this.id = id
     }
 
     override fun toString(): String {

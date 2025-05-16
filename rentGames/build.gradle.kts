@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.12.0")
+    implementation("org.postgresql:postgresql:42.7.5")
     testImplementation(kotlin("test"))
 }
 
