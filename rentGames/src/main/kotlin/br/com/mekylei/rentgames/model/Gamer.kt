@@ -8,9 +8,10 @@ import java.util.*
 import kotlin.random.Random
 
 data class Gamer(var name: String, var email: String) : Recommendable {
+    var id: Int = 0
     private var userId: String? = null
 
-    private var userName: String? = null
+    var userName: String? = null
         set(value) {
             field = value
             if (userId.isNullOrBlank()) {
@@ -18,7 +19,7 @@ data class Gamer(var name: String, var email: String) : Recommendable {
             }
         }
 
-    private var birthdate: String? = null
+    var birthdate: String? = null
 
     val games = mutableListOf<Game?>()
 
@@ -41,10 +42,11 @@ data class Gamer(var name: String, var email: String) : Recommendable {
         }
     }
 
-    constructor(name: String, email: String, userName: String, birthdate: String) : this(name, email) {
+    constructor(name: String, email: String, userName: String?, birthdate: String?, id: Int = 0) : this(name, email) {
         this.userName = userName
         this.birthdate = birthdate
         //this.printAge()
+        this.id = id
         this.createIdentifier()
     }
 

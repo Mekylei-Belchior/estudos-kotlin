@@ -18,7 +18,7 @@ data class Game(@Expose val title: String, @Expose val thumb: String) : Recommen
         reviews.add(rating)
     }
 
-    constructor(id: Int?, title: String, thumb: String, description: String, price: BigDecimal) : this(title, thumb) {
+    constructor(id: Int?, title: String, thumb: String, description: String?, price: BigDecimal) : this(title, thumb) {
         this.description = description
         this.price = price
         this.id = id
@@ -28,7 +28,7 @@ data class Game(@Expose val title: String, @Expose val thumb: String) : Recommen
         return "\n- Código   : ${this.id ?: '-'}" +
                 "\n- Título   : $title" +
                 "\n- Capa     : $thumb" +
-                "\n- Descrição: $description" +
+                "\n- Descrição: ${this.description ?: '-'}" +
                 "\n- Preço    : $price" +
                 "\n- Avaliação: $score"
     }
