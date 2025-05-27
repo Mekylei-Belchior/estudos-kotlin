@@ -9,7 +9,7 @@ import java.math.BigDecimal
 
 @Entity
 @Table(name = "jogos")
-class GameEntity(
+data class GameEntity(
     val title: String = "",
     val thumb: String = "",
     val description: String? = null,

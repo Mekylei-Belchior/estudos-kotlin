@@ -1,4 +1,4 @@
-package br.com.mekylei.rentgames.util
+package br.com.mekylei.rentgames.extensions
 
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols

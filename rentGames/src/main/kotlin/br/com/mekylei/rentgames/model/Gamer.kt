@@ -1,9 +1,9 @@
 package br.com.mekylei.rentgames.model
 
+import br.com.mekylei.rentgames.extensions.round
+import br.com.mekylei.rentgames.extensions.toAge
 import br.com.mekylei.rentgames.interfaces.Recommendable
 import br.com.mekylei.rentgames.util.RegexUtils
-import br.com.mekylei.rentgames.util.round
-import br.com.mekylei.rentgames.util.toAge
 import java.util.*
 import kotlin.random.Random
 
@@ -25,7 +25,7 @@ data class Gamer(var name: String, var email: String) : Recommendable {
 
     val rentalGames = mutableListOf<Rental>()
 
-    val plan: Plan = BasicPlan("BASIC")
+    var plan: Plan = BasicPlan()
 
     val recommendedGames = mutableListOf<Game>()
 
@@ -97,7 +97,13 @@ data class Gamer(var name: String, var email: String) : Recommendable {
     }
 
     override fun toString(): String {
-        return "Gamer(name='$name', email='$email', userId=$userId, userName=$userName, brithDate=$birthdate, score=$score)"
+        return "\n- ID             : $id" +
+                "\n- Nome           : $name" +
+                "\n- E-mail         : $email" +
+                "\n- Código usuário : $userId" +
+                "\n- Usuário        : $userName" +
+                "\n- Data Nascimento: $birthdate" +
+                "\n- Reputação      : $score"
     }
 
     fun printSorted(byField: String = "id") {
@@ -123,9 +129,10 @@ data class Gamer(var name: String, var email: String) : Recommendable {
         }
     }
 
-    fun rent(game: Game, period: RentalPeriod) {
-        val rentalGame = Rental(this, game, period)
+    fun rent(game: Game, period: RentalPeriod): Rental {
+        val rentalGame = Rental(0,this, game, period)
         rentalGames.add(rentalGame)
+        return rentalGame
     }
 
     fun getMonthlyRentedGames(month: Int): List<Game> {

@@ -3,7 +3,7 @@ package br.com.mekylei.rentgames.model
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class BasicPlan(typePlan: String) : Plan(typePlan) {
+class BasicPlan(id: Int = 0, typePlan: String = "BRONZE") : Plan(id, typePlan) {
     val defaultDiscount: BigDecimal = BigDecimal("0.1")
 
     override fun getPrice(rental: Rental): BigDecimal {

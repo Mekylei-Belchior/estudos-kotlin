@@ -4,11 +4,13 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "gamers")
-class GamerEntity(
+data class GamerEntity(
     val name: String = "",
     val email: String = "",
     val userName: String? = null,
     val birthdate: String? = null,
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
+    @ManyToOne
+    val plan: PlanEntity = BasicPlanEntity()
 )

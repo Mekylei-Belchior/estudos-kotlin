@@ -3,8 +3,8 @@ package br.com.mekylei.rentgames.service
 import br.com.mekylei.rentgames.helper.AppHttpClient
 import br.com.mekylei.rentgames.helper.ClientHttpException
 import br.com.mekylei.rentgames.model.*
-import br.com.mekylei.rentgames.util.createGame
-import br.com.mekylei.rentgames.util.createGamer
+import br.com.mekylei.rentgames.extensions.createGame
+import br.com.mekylei.rentgames.extensions.createGamer
 
 class SearchApi {
 

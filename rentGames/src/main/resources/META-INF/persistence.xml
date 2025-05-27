@@ -5,6 +5,10 @@
     <persistence-unit name="rentgames" transaction-type="RESOURCE_LOCAL">
         <class>br.com.mekylei.rentgames.entities.GameEntity</class>
         <class>br.com.mekylei.rentgames.entities.GamerEntity</class>
+        <class>br.com.mekylei.rentgames.entities.PlanEntity</class>
+        <class>br.com.mekylei.rentgames.entities.BasicPlanEntity</class>
+        <class>br.com.mekylei.rentgames.entities.PremiumPlanEntity</class>
+        <class>br.com.mekylei.rentgames.entities.RentalEntity</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/rentgames"/>

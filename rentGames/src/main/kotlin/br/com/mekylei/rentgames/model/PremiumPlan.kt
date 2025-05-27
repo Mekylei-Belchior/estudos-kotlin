@@ -4,11 +4,12 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class PremiumPlan(
+    id: Int = 0,
     planType: String,
     val monthlyFee: BigDecimal,
     val includedGames: Int,
     val discountRating: BigDecimal
-) : Plan(planType) {
+) : Plan(id, planType) {
     val freeOfCharge: BigDecimal = BigDecimal.ZERO
 
     override fun getPrice(rental: Rental): BigDecimal {
