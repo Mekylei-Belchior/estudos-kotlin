@@ -1,6 +1,5 @@
 package com.mekylei.delivery.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.mekylei.delivery.R
 import com.mekylei.delivery.extensions.toBrazilianCurrency
 import com.mekylei.delivery.model.Product
@@ -62,14 +62,15 @@ fun ProductItem(product: Product) {
                     )
                     .fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.placeholder),
+                AsyncImage(
+                    model = product.image,
                     contentDescription = null,
                     Modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.BottomCenter),
+                    placeholder = painterResource(id = R.drawable.placeholder),
                     contentScale = ContentScale.Crop
                 )
             }
