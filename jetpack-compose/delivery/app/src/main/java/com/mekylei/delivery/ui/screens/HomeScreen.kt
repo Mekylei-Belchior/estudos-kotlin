@@ -32,9 +32,26 @@ import com.mekylei.delivery.ui.theme.DeliveryTheme
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>
+    sections: Map<String, List<Product>>,
+    searchText: String = ""
 ) {
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(searchText) }
+    val searchedProducts = remember(text) {
+        if (text.isNotBlank()) {
+            sampleProducts.filter { product ->
+                product.name.contains(
+                    text,
+                    ignoreCase = true,
+                ) ||
+                        product.description?.contains(
+                            text,
+                            ignoreCase = true,
+                        ) ?: false
+            }
+        } else {
+            emptyList()
+        }
+    }
 
     Column(Modifier.padding(top = 40.dp)) {
         OutlinedTextField(
@@ -47,7 +64,7 @@ fun HomeScreen(
             leadingIcon = {
                 Icon(Icons.Default.Search, contentDescription = null)
             },
-            label = {Text(text = "O que você procura?")}
+            label = { Text(text = "O que você procura?") }
         )
 
         LazyColumn(
@@ -56,30 +73,49 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-            items(sampleProducts) {product -> CardProductItem(
-                product,
-                Modifier.padding(horizontal = 16.dp),
-            )}
-//            for (section in sections) {
-//                val title = section.key
-//                val products = section.value
-//                item {
-//                    ProductsSection(
-//                        title = title,
-//                        products = products
-//                    )
-//                }
-//            }
+            if (text.isBlank()) {
+                for (section in sections) {
+                    val title = section.key
+                    val products = section.value
+                    item {
+                        ProductsSection(
+                            title = title,
+                            products = products
+                        )
+                    }
+                }
+            } else {
+                items(searchedProducts) { product ->
+                    CardProductItem(
+                        product,
+                        Modifier.padding(horizontal = 16.dp),
+                    )
+                }
+            }
         }
     }
 }
 
+private val homeScreen: @Composable (text: String?) -> Unit
+    get() = { text ->
+        DeliveryTheme {
+            Surface {
+                HomeScreen(
+                    sampleSections,
+                    searchText = text ?: "",
+                )
+            }
+        }
+    }
+
 @Preview(showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    DeliveryTheme {
-        Surface {
-            HomeScreen(sampleSections)
-        }
-    }
+    homeScreen("")
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun HomeScreenWithSearchedTextPreview() {
+    homeScreen("ham")
 }
