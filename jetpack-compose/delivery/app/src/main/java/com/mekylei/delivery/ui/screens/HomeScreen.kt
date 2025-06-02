@@ -8,13 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +22,7 @@ import com.mekylei.delivery.sampledata.sampleProducts
 import com.mekylei.delivery.sampledata.sampleSections
 import com.mekylei.delivery.ui.components.CardProductItem
 import com.mekylei.delivery.ui.components.ProductsSection
+import com.mekylei.delivery.ui.components.SearchTextField
 import com.mekylei.delivery.ui.theme.DeliveryTheme
 
 @Composable
@@ -54,17 +49,12 @@ fun HomeScreen(
     }
 
     Column(Modifier.padding(top = 40.dp)) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = { newValue -> text = newValue },
+        SearchTextField(
+            text,
+            onSearchChange = { newValue -> text = newValue },
             Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(100),
-            leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = null)
-            },
-            label = { Text(text = "O que você procura?") }
         )
 
         LazyColumn(
@@ -96,7 +86,7 @@ fun HomeScreen(
     }
 }
 
-private val homeScreen: @Composable (text: String?) -> Unit
+val homeScreen: @Composable (text: String?) -> Unit
     get() = { text ->
         DeliveryTheme {
             Surface {
