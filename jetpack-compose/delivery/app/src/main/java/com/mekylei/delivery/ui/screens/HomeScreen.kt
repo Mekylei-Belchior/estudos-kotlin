@@ -48,7 +48,7 @@ fun HomeScreen(
         }
     }
 
-    Column(Modifier.padding(top = 40.dp)) {
+    Column {
         SearchTextField(
             text,
             onSearchChange = { newValue -> text = newValue },
