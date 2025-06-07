@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.mekylei.delivery.model.Product
 import com.mekylei.delivery.sampledata.sampleProducts
 import com.mekylei.delivery.sampledata.sampleSections
+import com.mekylei.delivery.sampledata.sampleShopSections
 import com.mekylei.delivery.ui.components.CardProductItem
+import com.mekylei.delivery.ui.components.PartnersSection
 import com.mekylei.delivery.ui.components.ProductsSection
 import com.mekylei.delivery.ui.components.SearchTextField
 import com.mekylei.delivery.ui.theme.DeliveryTheme
@@ -71,6 +73,16 @@ fun HomeScreen(
                         ProductsSection(
                             title = title,
                             products = products
+                        )
+                    }
+                }
+                for (shopSections in sampleShopSections) {
+                    val title = shopSections.key
+                    val shop = shopSections.value
+                    item {
+                        PartnersSection(
+                            title = title,
+                            shops = shop
                         )
                     }
                 }
