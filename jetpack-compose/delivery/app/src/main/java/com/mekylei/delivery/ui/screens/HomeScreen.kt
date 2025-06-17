@@ -27,33 +27,45 @@ import com.mekylei.delivery.ui.components.ProductsSection
 import com.mekylei.delivery.ui.components.SearchTextField
 import com.mekylei.delivery.ui.theme.DeliveryTheme
 
+class HomeScreenUiState(searchText: String = "") {
+    var text by mutableStateOf(searchText)
+        private set
+
+    val onSearchChange: (String) -> Unit = { searchText ->
+        text = searchText
+    }
+
+    val searchedProducts
+        get() =
+            if (text.isNotBlank()) {
+                sampleProducts.filter { product ->
+                    product.name.contains(
+                        text,
+                        ignoreCase = true,
+                    ) ||
+                            product.description?.contains(
+                                text,
+                                ignoreCase = true,
+                            ) ?: false
+                }
+            } else {
+                emptyList()
+            }
+
+    fun isShowSections(): Boolean = text.isBlank()
+}
+
 @Composable
 fun HomeScreen(
     sections: Map<String, List<Product>>,
-    searchText: String = ""
+    state: HomeScreenUiState = HomeScreenUiState()
 ) {
-    var text by remember { mutableStateOf(searchText) }
-    val searchedProducts = remember(text) {
-        if (text.isNotBlank()) {
-            sampleProducts.filter { product ->
-                product.name.contains(
-                    text,
-                    ignoreCase = true,
-                ) ||
-                        product.description?.contains(
-                            text,
-                            ignoreCase = true,
-                        ) ?: false
-            }
-        } else {
-            emptyList()
-        }
-    }
+    val searchedProducts = remember(state.text) { state.searchedProducts }
 
     Column {
         SearchTextField(
-            text,
-            onSearchChange = { newValue -> text = newValue },
+            state.text,
+            onSearchChange = state.onSearchChange,
             Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
@@ -65,7 +77,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-            if (text.isBlank()) {
+            if (state.isShowSections()) {
                 for (section in sections) {
                     val title = section.key
                     val products = section.value
@@ -102,9 +114,10 @@ val homeScreen: @Composable (text: String?) -> Unit
     get() = { text ->
         DeliveryTheme {
             Surface {
+                val state = remember { HomeScreenUiState(searchText = text ?: "") }
                 HomeScreen(
-                    sampleSections,
-                    searchText = text ?: "",
+                    sections = sampleSections,
+                    state = state,
                 )
             }
         }
