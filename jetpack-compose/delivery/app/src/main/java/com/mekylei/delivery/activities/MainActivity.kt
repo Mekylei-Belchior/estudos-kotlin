@@ -18,14 +18,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.mekylei.delivery.dao.ProductDAO
-import com.mekylei.delivery.sampledata.sampleCandies
-import com.mekylei.delivery.sampledata.sampleDrinks
 import com.mekylei.delivery.ui.screens.HomeScreen
-import com.mekylei.delivery.ui.screens.HomeScreenUiState
 import com.mekylei.delivery.ui.theme.DeliveryTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,14 +43,8 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }) {
-                    val sections = mapOf(
-                        "Todos produtos" to dao.products(),
-                        "Promoções" to sampleDrinks + sampleCandies,
-                        "Doces" to sampleCandies,
-                        "Bebidas" to sampleDrinks
-                    )
-                    val state = remember { HomeScreenUiState(searchText = "") }
-                    HomeScreen(sections = sections, state = state)
+                    val products = dao.products()
+                    HomeScreen(products = products)
                 }
             }
         }

@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mekylei.delivery.model.Product
+import com.mekylei.delivery.sampledata.sampleCandies
+import com.mekylei.delivery.sampledata.sampleDrinks
 import com.mekylei.delivery.sampledata.sampleProducts
 import com.mekylei.delivery.sampledata.sampleSections
 import com.mekylei.delivery.sampledata.sampleShopSections
@@ -27,44 +29,62 @@ import com.mekylei.delivery.ui.components.ProductsSection
 import com.mekylei.delivery.ui.components.SearchTextField
 import com.mekylei.delivery.ui.theme.DeliveryTheme
 
-class HomeScreenUiState(searchText: String = "") {
-    var text by mutableStateOf(searchText)
-        private set
-
-    val onSearchChange: (String) -> Unit = { searchText ->
-        text = searchText
-    }
-
-    val searchedProducts
-        get() =
-            if (text.isNotBlank()) {
-                sampleProducts.filter { product ->
-                    product.name.contains(
-                        text,
-                        ignoreCase = true,
-                    ) ||
-                            product.description?.contains(
-                                text,
-                                ignoreCase = true,
-                            ) ?: false
-                }
-            } else {
-                emptyList()
-            }
-
-    fun isShowSections(): Boolean = text.isBlank()
+class HomeScreenUiState(
+    val sections: Map<String, List<Product>> = emptyMap(),
+    val searchText: String = "",
+    val searchedProducts: List<Product> = emptyList(),
+    val onSearchChange: (String) -> Unit = { }
+) {
+    fun isShowSections(): Boolean = searchText.isBlank()
 }
 
 @Composable
-fun HomeScreen(
-    sections: Map<String, List<Product>>,
-    state: HomeScreenUiState = HomeScreenUiState()
-) {
-    val searchedProducts = remember(state.text) { state.searchedProducts }
+fun HomeScreen(products: List<Product>) {
+    val sections = mapOf(
+        "Todos produtos" to products,
+        "Promoções" to sampleDrinks + sampleCandies,
+        "Doces" to sampleCandies,
+        "Bebidas" to sampleDrinks
+    )
+    var text by remember { mutableStateOf("") }
 
+    val searchedProducts = remember(products, text) {
+        if (text.isNotBlank()) {
+            sampleProducts.filter(containsInNameOrDescriptions(text)) +
+                    products.filter(containsInNameOrDescriptions(text))
+        } else {
+            emptyList()
+        }
+    }
+
+    val state = remember(products, text) {
+        HomeScreenUiState(
+            sections = sections,
+            searchedProducts = searchedProducts,
+            onSearchChange = { text = it },
+            searchText = text
+        )
+    }
+
+    HomeScreen(state = state)
+}
+
+private fun containsInNameOrDescriptions(text: String) = { product: Product ->
+    product.name.contains(
+        text,
+        ignoreCase = true,
+    ) ||
+            product.description?.contains(
+                text,
+                ignoreCase = true,
+            ) ?: false
+}
+
+@Composable
+fun HomeScreen(state: HomeScreenUiState = HomeScreenUiState()) {
     Column {
         SearchTextField(
-            state.text,
+            state.searchText,
             onSearchChange = state.onSearchChange,
             Modifier
                 .padding(16.dp)
@@ -78,7 +98,7 @@ fun HomeScreen(
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             if (state.isShowSections()) {
-                for (section in sections) {
+                for (section in state.sections) {
                     val title = section.key
                     val products = section.value
                     item {
@@ -99,7 +119,7 @@ fun HomeScreen(
                     }
                 }
             } else {
-                items(searchedProducts) { product ->
+                items(state.searchedProducts) { product ->
                     CardProductItem(
                         product,
                         Modifier.padding(horizontal = 16.dp),
@@ -114,11 +134,13 @@ val homeScreen: @Composable (text: String?) -> Unit
     get() = { text ->
         DeliveryTheme {
             Surface {
-                val state = remember { HomeScreenUiState(searchText = text ?: "") }
-                HomeScreen(
-                    sections = sampleSections,
-                    state = state,
-                )
+                val state = remember {
+                    HomeScreenUiState(
+                        searchText = text ?: "",
+                        sections = sampleSections
+                    )
+                }
+                HomeScreen(state = state)
             }
         }
     }
