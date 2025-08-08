@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -41,7 +42,7 @@ fun CardProductItem(
     elevation: CardElevation = CardDefaults.cardElevation(),
     expanded: Boolean = false
 ) {
-    var expandedState by remember { mutableStateOf(expanded) }
+    var expandedState by rememberSaveable { mutableStateOf(expanded) }
 
     Card(
         modifier = modifier
@@ -73,14 +74,14 @@ fun CardProductItem(
                     text = product.price.toBrazilianCurrency()
                 )
             }
-            product.description?.let {
-                Text(
-                    text = product.description,
-                    Modifier
-                        .padding(16.dp),
-                    maxLines = if (expandedState) Int.MAX_VALUE else 2,
-                    overflow = if (expandedState) TextOverflow.Visible else TextOverflow.Ellipsis
-                )
+            if (expandedState) {
+                product.description?.let {
+                    Text(
+                        text = product.description,
+                        Modifier
+                            .padding(16.dp),
+                    )
+                }
             }
         }
     }
@@ -92,7 +93,8 @@ private fun CardProductItemPreview() {
     DeliveryTheme {
         Surface {
             CardProductItem(
-                product = sampleProducts.random()
+                product = sampleProducts.random(),
+                expanded = false,
             )
         }
     }
@@ -109,7 +111,8 @@ private fun CardProductItemWithDescriptionPreview() {
                     "Hamburger",
                     BigDecimal("45.25"),
                     description = LoremIpsum(50).values.first(),
-                )
+                ),
+                expanded = true
             )
         }
     }
