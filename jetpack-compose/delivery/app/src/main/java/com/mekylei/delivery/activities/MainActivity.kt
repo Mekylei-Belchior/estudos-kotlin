@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,12 +21,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.mekylei.delivery.dao.ProductDAO
 import com.mekylei.delivery.ui.screens.HomeScreen
 import com.mekylei.delivery.ui.theme.DeliveryTheme
+import com.mekylei.delivery.ui.viewmodelss.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-    private val dao = ProductDAO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -43,8 +43,8 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }) {
-                    val products = dao.products()
-                    HomeScreen(products = products)
+                    val viewModel by viewModels<HomeScreenViewModel>()
+                    HomeScreen(viewModel)
                 }
             }
         }
