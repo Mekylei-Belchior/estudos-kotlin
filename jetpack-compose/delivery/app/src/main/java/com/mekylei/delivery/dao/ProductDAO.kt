@@ -1,17 +1,19 @@
 package com.mekylei.delivery.dao
 
-import androidx.compose.runtime.mutableStateListOf
 import com.mekylei.delivery.model.Product
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class ProductDAO {
 
     companion object {
-        val products = mutableStateListOf<Product>()
+        val products = MutableStateFlow<List<Product>>(emptyList())
     }
 
-    fun products() = products.toList()
+    fun products(): StateFlow<List<Product>> = products.asStateFlow()
 
     fun save(product: Product) {
-        products.add(product)
+        products.value = products.value + product
     }
 }
