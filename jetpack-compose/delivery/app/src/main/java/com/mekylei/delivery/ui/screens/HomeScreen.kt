@@ -24,7 +24,7 @@ import com.mekylei.delivery.ui.components.ProductsSection
 import com.mekylei.delivery.ui.components.SearchTextField
 import com.mekylei.delivery.ui.states.HomeScreenUiState
 import com.mekylei.delivery.ui.theme.DeliveryTheme
-import com.mekylei.delivery.ui.viewmodelss.HomeScreenViewModel
+import com.mekylei.delivery.ui.viewmodels.HomeScreenViewModel
 
 @Composable
 fun HomeScreen(viewModel: HomeScreenViewModel) {

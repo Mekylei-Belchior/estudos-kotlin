@@ -1,4 +1,4 @@
-package com.mekylei.delivery.activities
+package com.mekylei.delivery.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.mekylei.delivery.ui.screens.ProductFormScreen
 import com.mekylei.delivery.ui.theme.DeliveryTheme
-import com.mekylei.delivery.ui.viewmodelss.ProductFormScreenViewModel
+import com.mekylei.delivery.ui.viewmodels.ProductFormScreenViewModel
 
 class ProductFromActivity : ComponentActivity() {
 

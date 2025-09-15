@@ -1,4 +1,4 @@
-package com.mekylei.delivery.ui.viewmodelss
+package com.mekylei.delivery.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

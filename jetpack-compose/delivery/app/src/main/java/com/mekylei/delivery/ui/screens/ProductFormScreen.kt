@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.mekylei.delivery.R
 import com.mekylei.delivery.ui.states.ProductFormUiState
-import com.mekylei.delivery.ui.viewmodelss.ProductFormScreenViewModel
+import com.mekylei.delivery.ui.viewmodels.ProductFormScreenViewModel
 
 @Composable
 fun ProductFormScreen(

@@ -1,4 +1,4 @@
-package com.mekylei.delivery.activities
+package com.mekylei.delivery.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.mekylei.delivery.ui.screens.HomeScreen
 import com.mekylei.delivery.ui.theme.DeliveryTheme
-import com.mekylei.delivery.ui.viewmodelss.HomeScreenViewModel
+import com.mekylei.delivery.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 

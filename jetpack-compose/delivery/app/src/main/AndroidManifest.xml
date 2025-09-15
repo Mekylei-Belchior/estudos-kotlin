@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Delivery"
         tools:targetApi="31">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Delivery"
             android:windowSoftInputMode="adjustResize">
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ProductFromActivity"
+            android:name=".ui.activities.ProductFromActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
         </activity>
